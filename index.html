@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Best Friend Surprise 😏</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Best Friend Surprise 💖</title>
 
   <style>
     body {
@@ -14,62 +14,75 @@
       align-items: center;
       font-family: "Poppins", sans-serif;
       background: radial-gradient(circle at top, #ffdde1, #ee9ca7);
+      overflow: hidden;
     }
 
+    /* Card */
     .card {
-      width: 460px;
-      height: 340px;
-      padding: 40px;
-      border-radius: 25px;
+      width: 480px;
+      height: 360px;
+      padding: 45px;
+      border-radius: 30px;
       background: rgba(255, 255, 255, 0.18);
-      backdrop-filter: blur(15px);
-      box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+      backdrop-filter: blur(18px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
       text-align: center;
       position: relative;
+      overflow: hidden;
     }
 
     h1 {
-      font-size: 32px;
+      font-size: 34px;
       color: white;
+      margin-bottom: 10px;
+      text-shadow: 0 0 20px rgba(255,255,255,0.4);
     }
 
     p {
       color: rgba(255,255,255,0.9);
-      margin-bottom: 25px;
+      margin-bottom: 35px;
+      font-size: 16px;
     }
 
     /* Button area */
     .btn-area {
       position: relative;
       width: 100%;
-      height: 120px;
-      margin-top: 20px;
-      border-radius: 15px;
+      height: 140px;
+      margin-top: 10px;
     }
 
     button {
-      padding: 14px 28px;
-      font-size: 16px;
+      padding: 15px 32px;
+      font-size: 17px;
       border: none;
-      border-radius: 14px;
+      border-radius: 16px;
       cursor: pointer;
       font-weight: bold;
       position: absolute;
-      transition: 0.05s; /* FAST */
+      transition: 0.03s; /* SUPER FAST */
     }
 
+    /* YES button */
     #yesBtn {
       background: linear-gradient(135deg, #00ffb3, #00c6ff);
       color: black;
-      left: 25%;
-      top: 40px;
+      left: 18%;
+      top: 55px;
+      box-shadow: 0 10px 25px rgba(0,255,200,0.4);
     }
 
+    #yesBtn:hover {
+      transform: scale(1.12);
+    }
+
+    /* NO button */
     #noBtn {
       background: linear-gradient(135deg, #ff4d6d, #ff1e56);
       color: white;
-      left: 55%;
-      top: 40px;
+      left: 62%;
+      top: 55px;
+      box-shadow: 0 10px 25px rgba(255,70,100,0.4);
     }
 
     /* Birthday page */
@@ -79,10 +92,33 @@
       color: white;
     }
 
+    .birthday h2 {
+      font-size: 46px;
+      text-shadow: 0 0 25px rgba(255,255,255,0.5);
+    }
+
     @keyframes fadeIn {
       from {opacity: 0; transform: scale(0.9);}
       to {opacity: 1; transform: scale(1);}
     }
+
+    /* Sparkle Effect */
+    .sparkle {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background: gold;
+      border-radius: 50%;
+      pointer-events: none;
+      animation: sparkleAnim 0.6s ease-out forwards;
+      box-shadow: 0 0 12px gold;
+    }
+
+    @keyframes sparkleAnim {
+      0% { transform: scale(1); opacity: 1; }
+      100% { transform: scale(3); opacity: 0; }
+    }
+
   </style>
 </head>
 
@@ -93,7 +129,7 @@
     <!-- Question -->
     <div id="questionPage">
       <h1>Am I your Best Friend? 😏</h1>
-      <p>Try pressing "No" if you can 😂</p>
+      <p>Try pressing "No" if you can 😈✨</p>
 
       <div class="btn-area" id="btnArea">
         <button id="yesBtn">Yes 💖</button>
@@ -103,7 +139,7 @@
 
     <!-- Birthday -->
     <div class="birthday" id="birthdayPage">
-      <h1>🎂 Happy Birthday 🎉</h1>
+      <h2>🎂 Happy Birthday 🎉</h2>
       <p>To my favourite person 💛</p>
       <p>You are truly special ✨</p>
     </div>
@@ -118,36 +154,42 @@
     const questionPage = document.getElementById("questionPage");
     const birthdayPage = document.getElementById("birthdayPage");
 
-    // Function: FAST ZigZag Move
-    function moveNoButton() {
+    // Sparkle function
+    function createSparkle(x, y) {
+      const sparkle = document.createElement("div");
+      sparkle.classList.add("sparkle");
+      sparkle.style.left = x + "px";
+      sparkle.style.top = y + "px";
+      document.body.appendChild(sparkle);
 
+      setTimeout(() => sparkle.remove(), 600);
+    }
+
+    // Fast runaway NO button
+    function moveNoButton() {
       const areaWidth = btnArea.clientWidth;
       const areaHeight = btnArea.clientHeight;
 
       const btnWidth = noBtn.offsetWidth;
       const btnHeight = noBtn.offsetHeight;
 
-      // Safe boundaries
       const maxX = areaWidth - btnWidth;
       const maxY = areaHeight - btnHeight;
 
-      // ZigZag random movement
       let x = Math.random() * maxX;
       let y = Math.random() * maxY;
 
-      // Extra zigzag jump
-      x += (Math.random() > 0.5 ? 40 : -40);
-      y += (Math.random() > 0.5 ? 25 : -25);
-
-      // Keep inside boundaries
-      x = Math.max(0, Math.min(x, maxX));
-      y = Math.max(0, Math.min(y, maxY));
-
       noBtn.style.left = x + "px";
       noBtn.style.top = y + "px";
+
+      // Sparkle burst
+      createSparkle(
+        btnArea.getBoundingClientRect().left + x + 30,
+        btnArea.getBoundingClientRect().top + y + 20
+      );
     }
 
-    // Runaway events (Always works)
+    // Events for desktop + mobile
     noBtn.addEventListener("mouseenter", moveNoButton);
     noBtn.addEventListener("click", moveNoButton);
     noBtn.addEventListener("touchstart", moveNoButton);
@@ -161,3 +203,4 @@
 
 </body>
 </html>
+
